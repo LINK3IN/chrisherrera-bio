@@ -91,6 +91,40 @@
   }
 
   /* ---------- pergunta / bifurcação ---------- */
+  /* ---------- modal de entrada ---------- */
+  .gate{
+    position:fixed;inset:0;z-index:100;
+    display:grid;place-items:center;padding:24px;
+    background:rgba(8,11,20,.92);
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  }
+  .gate[hidden]{display:none;}
+  .gate-card{
+    width:100%;max-width:420px;
+    background:var(--bg-2);border:1px solid var(--line);
+    border-radius:18px;padding:30px 22px;text-align:center;
+    box-shadow:0 24px 70px rgba(0,0,0,.6);
+    animation:gatein .3s ease;
+  }
+  @keyframes gatein{from{opacity:0;transform:translateY(14px) scale(.97);}to{opacity:1;transform:none;}}
+  .gate-card h2{font-size:20px;font-weight:900;letter-spacing:-.01em;margin-bottom:6px;line-height:1.3;}
+  .gate-card p{font-size:13.5px;color:var(--muted-2);font-weight:600;margin-bottom:20px;}
+  .gate-card .opts{flex-direction:column;}
+  .gate-card .opt{padding:15px 10px;font-size:15px;}
+
+  /* conteudo so aparece depois da escolha */
+  .stage{display:none;}
+  .stage.on{display:block;animation:fade .3s ease;}
+
+  /* trocar resposta */
+  .swap{
+    display:block;width:100%;margin:18px 0 0;
+    background:none;border:none;cursor:pointer;
+    font-family:inherit;font-size:12.5px;font-weight:700;
+    color:var(--muted-2);text-decoration:underline;
+  }
+  .swap:hover{color:var(--muted);}
+
   .fork{
     background:var(--bg-2);
     border:1px solid var(--line);
@@ -159,8 +193,27 @@
     *{animation:none!important;transition:none!important;}
   }
 </style>
+<noscript><style>
+  .gate{display:none!important;}
+  .stage{display:block!important;}
+  .path{display:block!important;}
+  .swap{display:none!important;}
+</style></noscript>
 </head>
 <body>
+
+<!-- ================= PERGUNTA DE ENTRADA ================= -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-t">
+  <div class="gate-card">
+    <h2 id="gate-t">Você já tem um mini mercado rodando?</h2>
+    <p>Responde que eu te mostro só o que serve pra você.</p>
+    <div class="opts">
+      <button class="opt" type="button" data-go="p-nao">Ainda não</button>
+      <button class="opt" type="button" data-go="p-sim">Já tenho</button>
+    </div>
+  </div>
+</div>
+
 <div class="wrap">
 
   <div class="head">
@@ -169,28 +222,17 @@
     <p class="role">23 anos, empreendendo desde os 18. Hoje toco 3 lojas e um mini mercado de condomínio.</p>
   </div>
 
-  <!-- ================= GRÁTIS ================= -->
-  <!-- BLOCO DO WHATSAPP REMOVIDO POR ENQUANTO.
-       Pra reativar: recoloca o <a class="row wa"> aqui com o link do grupo.
-       O CSS (.row.wa) segue no arquivo, então é só colar de volta. -->
+  <!-- ================= CONTEUDO (aparece depois da escolha) ================= -->
+  <div class="stage" id="stage">
 
+    <!-- ---------- GRATIS: sempre primeiro ---------- -->
   <a class="row" href="https://youtube.com/@christian.herrera1?utm_source=bio&utm_medium=hub&utm_content=youtube">
     <span class="ico"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.6-.5-5.3a2.7 2.7 0 0 0-1.9-1.9C18.9 4.3 12 4.3 12 4.3s-6.9 0-8.6.5a2.7 2.7 0 0 0-1.9 1.9C1 8.4 1 12 1 12s0 3.6.5 5.3c.3 1 1 1.7 1.9 1.9 1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5c.9-.2 1.6-.9 1.9-1.9.5-1.7.5-5.3.5-5.3zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></span>
     <span class="txt"><strong>Vídeos no YouTube</strong><span>De graça. Bastidor real da operação.</span></span>
   </a>
 
-  <!-- ================= BIFURCAÇÃO ================= -->
-  <div class="fork">
-    <h2>Você já tem um mini mercado rodando?</h2>
-    <p>Responde que eu te mostro só o que serve pra você.</p>
-
-    <div class="opts" role="tablist">
-      <button class="opt" role="tab" aria-selected="false" aria-controls="p-nao" data-go="p-nao">Ainda não</button>
-      <button class="opt" role="tab" aria-selected="false" aria-controls="p-sim" data-go="p-sim">Já tenho</button>
-    </div>
-
-    <!-- caminho: ainda não tem -->
-    <div class="path" id="p-nao" role="tabpanel">
+    <!-- ---------- MONETIZACAO: conforme a resposta ---------- -->
+    <div class="path" id="p-nao">
       <p class="lead">Então seu risco maior é errar o ponto. É onde quase todo mundo perde dinheiro.</p>
 
       <a class="offer" href="https://www.condominiocerto.site/?utm_source=bio&utm_medium=hub&utm_content=curso">
@@ -208,9 +250,7 @@
         <span class="txt"><strong>Sistema para Mini Mercado</strong><span class="deal">10% off no totem<span class="tag">PARCERIA</span></span></span>
       </a>
     </div>
-
-    <!-- caminho: já tem -->
-    <div class="path" id="p-sim" role="tabpanel">
+    <div class="path" id="p-sim">
       <p class="lead">Então o jogo já não é achar ponto. É margem, contrato e controle.</p>
 
       <a class="row" href="https://pay.kiwify.com.br/XiqkPk1?utm_source=bio&utm_medium=hub&utm_content=contrato_renov">
@@ -228,6 +268,9 @@
         <span class="txt"><strong>Quer ajuda com a sua operação?</strong><span>Me chama no direct e me conta seu caso.</span></span>
       </a>
     </div>
+
+    <button class="swap" id="swap" type="button">Trocar minha resposta</button>
+
   </div>
 
   <!-- ================= RODAPÉ ================= -->
@@ -244,17 +287,41 @@
 </div>
 
 <script>
-  document.querySelectorAll('.opt').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var alvo = btn.dataset.go;
-      document.querySelectorAll('.opt').forEach(function(b){
-        b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
-      });
-      document.querySelectorAll('.path').forEach(function(p){
-        p.classList.toggle('on', p.id === alvo);
-      });
+(function(){
+  var gate  = document.getElementById('gate');
+  var stage = document.getElementById('stage');
+
+  function escolher(alvo){
+    document.querySelectorAll('.path').forEach(function(p){
+      p.classList.toggle('on', p.id === alvo);
     });
+    gate.hidden = true;
+    stage.classList.add('on');
+    document.body.style.overflow = '';
+    window.scrollTo(0, 0);
+  }
+
+  function perguntar(){
+    gate.hidden = false;
+    stage.classList.remove('on');
+    document.querySelectorAll('.path').forEach(function(p){ p.classList.remove('on'); });
+    document.body.style.overflow = 'hidden';
+  }
+
+  document.querySelectorAll('.gate .opt').forEach(function(btn){
+    btn.addEventListener('click', function(){ escolher(btn.dataset.go); });
   });
+
+  document.getElementById('swap').addEventListener('click', perguntar);
+
+  // pergunta sempre, inclusive quando a pessoa volta pelo botao voltar
+  // (o navegador restaura a pagina congelada, entao o script nao rodaria de novo)
+  window.addEventListener('pageshow', function(e){
+    if (e.persisted) { perguntar(); }
+  });
+
+  perguntar();
+})();
 </script>
 </body>
 </html>
