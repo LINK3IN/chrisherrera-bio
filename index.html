@@ -78,8 +78,32 @@
     display:grid;place-items:center;background:rgba(37,99,235,.16);
   }
   .row .ico svg{width:20px;height:20px;fill:var(--elect-l);}
-  .row.wa .ico{background:rgba(37,211,102,.14);}
-  .row.wa .ico svg{fill:var(--green);}
+  /* ---------- WhatsApp: botao cheio, verde ---------- */
+  .row.wa{
+    background:linear-gradient(180deg,#2EE676,var(--green));
+    border-color:transparent;color:#06301A;
+    border-bottom:3px solid rgba(0,0,0,.22);
+    box-shadow:0 8px 26px rgba(37,211,102,.28);
+  }
+  .row.wa:hover{
+    border-color:transparent;transform:translateY(-2px);
+    box-shadow:0 14px 34px rgba(37,211,102,.4);filter:brightness(1.04);
+  }
+  .row.wa:active{transform:translateY(1px);border-bottom-width:1px;box-shadow:0 4px 14px rgba(37,211,102,.3);}
+  .row.wa .ico{background:rgba(6,48,26,.16);}
+  .row.wa .ico svg{fill:#06301A;}
+  .row.wa .txt strong{font-size:15.5px;}
+  .row.wa .txt span{color:#06301A;opacity:.72;}
+  .row.wa .go svg{fill:#06301A;opacity:.55;}
+
+  /* ---------- YouTube: vermelho ---------- */
+  .row.yt .ico{background:rgba(255,0,0,.14);}
+  .row.yt .ico svg{fill:#FF3B30;}
+  .row.yt:hover{border-color:#FF3B30;}
+
+  /* seta das linhas */
+  .row .go{flex:0 0 auto;width:22px;height:22px;display:grid;place-items:center;transition:transform .15s ease;}
+  .row:hover .go{transform:translateX(3px);}
   .row .txt strong{display:block;font-size:15.5px;font-weight:800;line-height:1.3;}
   .row .txt span{font-size:12.5px;color:var(--muted-2);font-weight:600;}
   .row .txt span.deal{
@@ -220,11 +244,11 @@
 <!-- ================= PERGUNTA DE ENTRADA ================= -->
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-t">
   <div class="gate-card">
-    <h2 id="gate-t">Você já tem um mini mercado rodando?</h2>
+    <h2 id="gate-t">Você já é dono de um negócio?</h2>
     <p>Responde que eu te mostro só o que serve pra você.</p>
     <div class="opts">
-      <button class="opt" type="button" data-go="p-nao">Ainda não</button>
-      <button class="opt" type="button" data-go="p-sim">Já tenho</button>
+      <button class="opt" type="button" data-go="p-nao">Ainda não tenho</button>
+      <button class="opt" type="button" data-go="p-sim">Já tenho um negócio</button>
     </div>
   </div>
 </div>
@@ -241,7 +265,13 @@
   <div class="stage" id="stage">
 
     <!-- ---------- GRATIS: sempre primeiro ---------- -->
-  <a class="row" href="https://youtube.com/@christian.herrera1?utm_source=bio&utm_medium=hub&utm_content=youtube">
+  <a class="row wa" href="https://chat.whatsapp.com/DhX87YVm2h5AF4WXH3Cb6i">
+    <span class="ico"><svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1s-.5-.2-.7.1-.8 1-1 1.2-.4.2-.7.1a8.2 8.2 0 0 1-4-3.5c-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.2 1.2-1.2 2.8s1.2 3.3 1.4 3.5a12.8 12.8 0 0 0 5 4.4c1.8.7 2.5.8 3.4.7.5-.1 1.8-.7 2-1.5.3-.7.3-1.4.2-1.5s-.2-.2-.5-.4zM12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></span>
+    <span class="txt"><strong>Comunidade no WhatsApp</strong><span>Entra de graça. Operador conversando com operador.</span></span>
+    <span class="go"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" stroke="#06301A" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+  </a>
+
+  <a class="row yt" href="https://youtube.com/@christian.herrera1?utm_source=bio&utm_medium=hub&utm_content=youtube">
     <span class="ico"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.6-.5-5.3a2.7 2.7 0 0 0-1.9-1.9C18.9 4.3 12 4.3 12 4.3s-6.9 0-8.6.5a2.7 2.7 0 0 0-1.9 1.9C1 8.4 1 12 1 12s0 3.6.5 5.3c.3 1 1 1.7 1.9 1.9 1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5c.9-.2 1.6-.9 1.9-1.9.5-1.7.5-5.3.5-5.3zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></span>
     <span class="txt"><strong>Vídeos no YouTube</strong><span>De graça. Bastidor real da operação.</span></span>
   </a>
